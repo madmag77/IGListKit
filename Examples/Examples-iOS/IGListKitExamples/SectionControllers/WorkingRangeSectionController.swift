@@ -73,8 +73,7 @@ final class WorkingRangeSectionController: IGListSectionController, IGListSectio
             let url = URL(string: urlString)
             else { return }
 
-        let section = collectionContext?.section(for: self) ?? 0
-        print("Downloading image \(urlString) for section \(section)")
+        print("Downloading image \(urlString) for section \(self.sectionIndex)")
 
         task = URLSession.shared.dataTask(with: url) { data, response, err in
             guard let data = data, let image = UIImage(data: data) else {
