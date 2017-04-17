@@ -45,6 +45,10 @@ final class EmbeddedSectionController: IGListSectionController, IGListSectionTyp
         number = object as? Int
     }
 
-    func didSelectItem(at index: Int) {}
+    func didSelectItem(at index: Int) {
+        collectionContext?.performBatch(animated: true, updates: { (batchContext) in
+            batchContext.insert(in: self, at: [0])
+        })
+    }
 
 }
