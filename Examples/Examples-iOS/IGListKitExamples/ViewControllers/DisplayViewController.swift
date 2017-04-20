@@ -16,17 +16,25 @@ import UIKit
 import IGListKit
 
 final class DisplayViewController: UIViewController, IGListAdapterDataSource {
-
+    
+    lazy var items: [Int] = {
+        var itemsIternal: [Int] = []
+        for i: Int in (1..<150) {
+            itemsIternal.append(i)
+        }
+        return itemsIternal
+    }()
     lazy var adapter: IGListAdapter = {
         return IGListAdapter(updater: IGListAdapterUpdater(), viewController: self, workingRangeSize: 0)
     }()
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: IGListCollectionViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: false))
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(collectionView)
         adapter.collectionView = collectionView
         adapter.dataSource = self
+
     }
 
     override func viewDidLayoutSubviews() {
@@ -37,7 +45,7 @@ final class DisplayViewController: UIViewController, IGListAdapterDataSource {
     // MARK: IGListAdapterDataSource
 
     func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
-        return [1, 2, 3, 4, 5, 6] as [NSNumber]
+        return items as [IGListDiffable]
     }
 
     func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {

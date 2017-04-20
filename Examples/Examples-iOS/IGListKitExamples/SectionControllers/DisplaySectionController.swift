@@ -20,21 +20,29 @@ final class DisplaySectionController: IGListSectionController, IGListSectionType
     override init() {
         super.init()
         displayDelegate = self
-        inset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
+        inset = UIEdgeInsets(top: 10, left: 10, bottom: 30, right: 10)
+        minimumLineSpacing = 10
+        minimumInteritemSpacing = 10
     }
 
     func numberOfItems() -> Int {
-        return 4
+        return 1
     }
 
     func sizeForItem(at index: Int) -> CGSize {
-        return CGSize(width: collectionContext!.containerSize.width, height: 55)
+        var width = collectionContext!.containerSize.width
+        if collectionContext!.containerSize.width > 600 {
+            width = collectionContext!.containerSize.width * 0.4
+        } else if collectionContext!.containerSize.width > 1200  {
+            width = collectionContext!.containerSize.width * 0.2
+        }
+        return CGSize(width: width, height: CGFloat(arc4random_uniform(100) + 50))
     }
 
     func cellForItem(at index: Int) -> UICollectionViewCell {
-        let cell = collectionContext!.dequeueReusableCell(of: LabelCell.self, for: self, at: index) as! LabelCell
-        let section = collectionContext!.section(for: self)
-        cell.text = "Section \(section), cell \(index)"
+        let cellClass: AnyClass = ImageCell.self
+        let cell = collectionContext!.dequeueReusableCell(of: cellClass, for: self, at: index)
+        (cell as? ImageCell)?.setImage(image: UIImage(named: "kotik"))
         return cell
     }
 

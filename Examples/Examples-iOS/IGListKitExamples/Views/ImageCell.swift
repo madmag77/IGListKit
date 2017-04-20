@@ -18,7 +18,7 @@ final class ImageCell: UICollectionViewCell {
 
     fileprivate let imageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFill
+        view.contentMode = .scaleAspectFit
         view.clipsToBounds = true
         view.backgroundColor = UIColor(white: 0.95, alpha: 1)
         return view
